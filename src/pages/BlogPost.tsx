@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, Calendar, Clock, Tag, Share2 } from 'lucide-react';
+import { ArrowLeft, Calendar, Clock, Tag, Share2, Play } from 'lucide-react';
 import ContactForm from '../components/ContactForm';
 
 const BlogPost = () => {
