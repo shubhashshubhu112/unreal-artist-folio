@@ -1,52 +1,79 @@
 
 import React from 'react';
-import { ArrowRight, ChevronDown } from 'lucide-react';
+import { ArrowRight, ChevronDown, Code, Palette, Zap } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import ContactForm from '../components/ContactForm';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 
 const Home = () => {
+  const features = [
+    {
+      icon: <Code className="w-6 h-6" />,
+      title: "Technical Artistry",
+      description: "Advanced shader development and rendering optimization"
+    },
+    {
+      icon: <Palette className="w-6 h-6" />,
+      title: "Level Design",
+      description: "Immersive environments with optimal performance"
+    },
+    {
+      icon: <Zap className="w-6 h-6" />,
+      title: "Tool Development",
+      description: "Custom pipeline solutions and automation"
+    }
+  ];
+
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-blue-50">
+      <section className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-blue-50 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-          <div className="text-center space-y-8">
-            {/* Profile Image */}
-            <div className="relative inline-block">
-              <div className="w-48 h-48 mx-auto rounded-full bg-gradient-to-br from-blue-400 to-purple-500 p-1">
-                <div className="w-full h-full rounded-full bg-gray-200 flex items-center justify-center text-4xl font-bold text-gray-600">
-                  SNT
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-center">
+            {/* Main Content */}
+            <div className="lg:col-span-2 space-y-8">
+              {/* Profile Image */}
+              <div className="relative inline-block">
+                <div className="w-48 h-48 mx-auto lg:mx-0 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 p-1">
+                  <div className="w-full h-full rounded-full bg-gray-200 flex items-center justify-center text-4xl font-bold text-gray-600">
+                    SNT
+                  </div>
                 </div>
+              </div>
+
+              {/* Name and Title */}
+              <div className="space-y-4 text-center lg:text-left">
+                <h1 className="text-5xl sm:text-6xl lg:text-7xl font-light text-gray-900 tracking-tight">
+                  Shubhash Nath Thakur
+                </h1>
+                <p className="text-xl sm:text-2xl text-gray-600 font-light">
+                  Technical Artist & Level Designer
+                </p>
+                <p className="text-lg text-blue-600 font-medium">
+                  Bridging Art & Technology through Unreal Engine
+                </p>
+              </div>
+
+              {/* CTA Buttons */}
+              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center pt-8">
+                <Button asChild size="lg" className="bg-blue-600 hover:bg-blue-700">
+                  <Link to="/portfolio">
+                    View Portfolio
+                    <ArrowRight className="ml-2 w-4 h-4" />
+                  </Link>
+                </Button>
+                <Button asChild variant="outline" size="lg">
+                  <Link to="/contact">
+                    Get In Touch
+                  </Link>
+                </Button>
               </div>
             </div>
 
-            {/* Name and Title */}
-            <div className="space-y-4">
-              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-light text-gray-900 tracking-tight">
-                Shubhash Nath Thakur
-              </h1>
-              <p className="text-xl sm:text-2xl text-gray-600 font-light">
-                Technical Artist & Level Designer
-              </p>
-              <p className="text-lg text-blue-600 font-medium">
-                Bridging Art & Technology through Unreal Engine
-              </p>
-            </div>
-
-            {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-8">
-              <Link
-                to="/portfolio"
-                className="inline-flex items-center px-8 py-3 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors group"
-              >
-                View Portfolio
-                <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </Link>
-              <Link
-                to="/contact"
-                className="inline-flex items-center px-8 py-3 border border-gray-300 text-gray-700 rounded-full hover:border-gray-400 transition-colors"
-              >
-                Get In Touch
-              </Link>
+            {/* Contact Form Sidebar */}
+            <div className="lg:col-span-1">
+              <ContactForm />
             </div>
           </div>
         </div>
@@ -57,27 +84,37 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Brief Introduction */}
+      {/* Features Section */}
       <section className="py-20 bg-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl sm:text-4xl font-light text-gray-900 mb-8">
-            Crafting Digital Experiences
-          </h2>
-          <p className="text-lg text-gray-600 leading-relaxed mb-8">
-            I specialize in technical artistry and level design, with deep expertise in Unreal Engine 5.5+, 
-            shader development, and procedural generation. My passion lies in bridging the gap between 
-            creative vision and technical implementation, developing tools and workflows that empower 
-            artistic expression while maintaining optimal performance.
-          </p>
-          <p className="text-lg text-gray-600 leading-relaxed">
-            From Epic Games challenges to mentoring fellow developers, I'm committed to pushing the 
-            boundaries of what's possible in real-time 3D experiences and contributing to the 
-            open-source community.
-          </p>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl font-light text-gray-900 mb-8">
+              Crafting Digital Experiences
+            </h2>
+            <p className="text-lg text-gray-600 leading-relaxed max-w-4xl mx-auto">
+              I specialize in technical artistry and level design, with deep expertise in Unreal Engine 5.5+, 
+              shader development, and procedural generation. My passion lies in bridging the gap between 
+              creative vision and technical implementation.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {features.map((feature, index) => (
+              <Card key={index} className="bg-white shadow-lg border-0 hover:shadow-xl transition-shadow">
+                <CardContent className="p-8 text-center">
+                  <div className="bg-blue-100 rounded-full p-4 w-16 h-16 mx-auto mb-6 flex items-center justify-center text-blue-600">
+                    {feature.icon}
+                  </div>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-4">{feature.title}</h3>
+                  <p className="text-gray-600">{feature.description}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* Quick Stats */}
+      {/* Stats Section */}
       <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
