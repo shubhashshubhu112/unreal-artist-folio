@@ -1,18 +1,26 @@
-
-import React from 'react';
-import { Calendar, Clock, ArrowRight } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Calendar, Clock, ArrowRight, Plus } from 'lucide-react';
 import ContactForm from '../components/ContactForm';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 
 const Blog = () => {
-  const blogPosts = [
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    const storedPosts = JSON.parse(localStorage.getItem('blog_posts') || '[]');
+    setPosts(storedPosts);
+  }, []);
+
+  const defaultPosts = [
     {
       title: "Advanced Shader Techniques in Unreal Engine 5.5",
       excerpt: "Exploring the latest shader development techniques and optimization strategies for modern real-time rendering.",
       date: "2024-05-15",
       readTime: "8 min read",
       tags: ["Shaders", "Unreal Engine", "Optimization"],
+      slug: "advanced-shader-techniques-unreal-engine-5-5",
       image: "/api/placeholder/400/200"
     },
     {
@@ -21,6 +29,7 @@ const Blog = () => {
       date: "2024-04-28",
       readTime: "12 min read",
       tags: ["Procedural Generation", "Level Design", "Blueprints"],
+      slug: "procedural-level-generation-best-practices",
       image: "/api/placeholder/400/200"
     },
     {
@@ -29,6 +38,7 @@ const Blog = () => {
       date: "2024-04-10",
       readTime: "10 min read",
       tags: ["VR", "Performance", "Optimization"],
+      slug: "performance-optimization-vr-applications",
       image: "/api/placeholder/400/200"
     },
     {
@@ -37,6 +47,7 @@ const Blog = () => {
       date: "2024-03-22",
       readTime: "15 min read",
       tags: ["Python", "Tools", "Pipeline"],
+      slug: "building-custom-tools-python-unreal",
       image: "/api/placeholder/400/200"
     },
     {
@@ -45,6 +56,7 @@ const Blog = () => {
       date: "2024-03-05",
       readTime: "6 min read",
       tags: ["Technical Art", "Career", "Collaboration"],
+      slug: "the-art-technical-art-bridging-creativity-code",
       image: "/api/placeholder/400/200"
     },
     {
@@ -53,47 +65,63 @@ const Blog = () => {
       date: "2024-02-18",
       readTime: "9 min read",
       tags: ["Epic Games", "Level Design", "Learning"],
+      slug: "epic-games-challenge-lessons-learned",
       image: "/api/placeholder/400/200"
     }
   ];
+
+  const allPosts = [...posts, ...defaultPosts];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
       {/* Hero Section */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h1 className="text-4xl sm:text-5xl font-light text-gray-900 mb-6">
-              Blog & Insights
-            </h1>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Technical insights, tutorials, and thoughts on game development, 
-              technical artistry, and the latest in Unreal Engine development.
-            </p>
+          <div className="flex justify-between items-center mb-16">
+            <div className="text-center flex-1">
+              <h1 className="text-4xl sm:text-5xl font-light text-gray-900 mb-6">
+                Blog & Insights
+              </h1>
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+                Technical insights, tutorials, and thoughts on game development, 
+                technical artistry, and the latest in Unreal Engine development.
+              </p>
+            </div>
+            <Link 
+              to="/admin/blog/new"
+              className="ml-8 inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+            >
+              <Plus className="w-4 h-4 mr-2" />
+              New Post
+            </Link>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Blog Posts */}
             <div className="lg:col-span-2">
               <div className="space-y-8">
-                {blogPosts.map((post, index) => (
+                {allPosts.map((post, index) => (
                   <Card key={index} className="bg-white/80 backdrop-blur-sm shadow-lg border-0 hover:shadow-xl transition-shadow">
                     <div className="md:flex">
                       <div className="md:w-1/3">
-                        <div className="h-48 md:h-full bg-gradient-to-br from-blue-100 to-purple-100 rounded-l-lg flex items-center justify-center">
-                          <div className="text-center text-gray-500">
-                            <div className="w-16 h-16 mx-auto mb-2 bg-gray-200 rounded-lg flex items-center justify-center">
-                              <Calendar className="w-8 h-8" />
+                        <Link to={`/blog/${post.slug}`}>
+                          <div className="h-48 md:h-full bg-gradient-to-br from-blue-100 to-purple-100 rounded-l-lg flex items-center justify-center hover:from-blue-200 hover:to-purple-200 transition-colors cursor-pointer">
+                            <div className="text-center text-gray-500">
+                              <div className="w-16 h-16 mx-auto mb-2 bg-gray-200 rounded-lg flex items-center justify-center">
+                                <Calendar className="w-8 h-8" />
+                              </div>
+                              <p className="text-sm">Article Preview</p>
                             </div>
-                            <p className="text-sm">Article Preview</p>
                           </div>
-                        </div>
+                        </Link>
                       </div>
                       <div className="md:w-2/3">
                         <CardHeader>
-                          <CardTitle className="text-xl font-semibold text-gray-900 mb-2">
-                            {post.title}
-                          </CardTitle>
+                          <Link to={`/blog/${post.slug}`}>
+                            <CardTitle className="text-xl font-semibold text-gray-900 mb-2 hover:text-blue-600 transition-colors cursor-pointer">
+                              {post.title}
+                            </CardTitle>
+                          </Link>
                           <div className="flex items-center text-sm text-gray-500 mb-3">
                             <Calendar className="w-4 h-4 mr-2" />
                             <span>{new Date(post.date).toLocaleDateString()}</span>
@@ -101,7 +129,7 @@ const Blog = () => {
                             <Clock className="w-4 h-4 mr-2" />
                             <span>{post.readTime}</span>
                           </div>
-                          <p className="text-gray-600 leading-relaxed mb-4">
+                          <p className="text-gray-600 leading-relaxed mb-4 line-clamp-3">
                             {post.excerpt}
                           </p>
                         </CardHeader>
@@ -113,10 +141,12 @@ const Blog = () => {
                               </span>
                             ))}
                           </div>
-                          <Button variant="outline" className="group">
-                            Read More
-                            <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-                          </Button>
+                          <Link to={`/blog/${post.slug}`}>
+                            <Button variant="outline" className="group">
+                              Read More
+                              <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                            </Button>
+                          </Link>
                         </CardContent>
                       </div>
                     </div>
